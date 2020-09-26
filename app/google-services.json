@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "1027985507719",
+    "firebase_url": "https://codeithackathon.firebaseio.com",
+    "project_id": "codeithackathon",
+    "storage_bucket": "codeithackathon.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1027985507719:android:959b3d959fa6541974ff22",
+        "android_client_info": {
+          "package_name": "com.example.codeit2"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1027985507719-jcpsf0j00e1967te2daemp8ol50t0eto.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDiifHZN3kdz0wmn6MP-1AX2AoD7lz-Bno"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1027985507719-jcpsf0j00e1967te2daemp8ol50t0eto.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
