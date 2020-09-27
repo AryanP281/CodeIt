@@ -9,6 +9,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
 
@@ -76,6 +77,11 @@ public class AdminDashActivity extends AppCompatActivity
             Intent intent = new Intent(this, AuthActivity.class);
             intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
             startActivity(intent);
+        }
+        else if(item.getItemId() == R.id.admin_new_course)
+        {
+            //CREATE NEW COURSE
+            Toast.makeText(this, "CREATE COURSE", Toast.LENGTH_SHORT).show();
         }
 
         return true;
