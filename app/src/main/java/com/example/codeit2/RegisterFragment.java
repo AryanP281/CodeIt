@@ -23,13 +23,18 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.UserProfileChangeRequest;
+import com.google.firebase.firestore.FirebaseFirestore;
+
+import java.util.HashMap;
+import java.util.Map;
 
 public class RegisterFragment extends Fragment
 {
     boolean authEntity; //Student or admin
     private FirebaseAuth firebaseAuth;
+    private FirebaseFirestore firestore;
 
-    private boolean passwordVisible = false;
+    private boolean passwordVisible = true;
     private EditText passwordField;
     private ImageButton showPssBtn;
 
@@ -58,6 +63,7 @@ public class RegisterFragment extends Fragment
         initializeUi(fragmentView);
 
         firebaseAuth = FirebaseAuth.getInstance();
+        firestore = FirebaseFirestore.getInstance();
 
         ((Button)fragmentView.findViewById(R.id.registration_btn)).setOnClickListener(clickListener);
         showPssBtn.setOnClickListener(clickListener);
@@ -88,7 +94,7 @@ public class RegisterFragment extends Fragment
         /**Registers the user in firebase using the entered credentials**/
 
         //Getting the entered user info
-        String email  = ((EditText)getView().findViewById(R.id.registration_email)).getText().toString().trim(); //Getting the entered email
+        final String email  = ((EditText)getView().findViewById(R.id.registration_email)).getText().toString().trim(); //Getting the entered email
         String password = passwordField.getText().toString().trim(); //Getting the entered password
         final String username = ((EditText)getView().findViewById(R.id.registration_username)).getText().toString().trim(); //Getting the entered username
 
@@ -104,6 +110,11 @@ public class RegisterFragment extends Fragment
                 {
                     if(task.isSuccessful())
                     {
+                        //Adding to db
+                        Map<String, Object> attrs = new HashMap<>();
+                        attrs.put("isAdmin", !authEntity);
+                        firestore.collection("users").document(email).set(attrs);
+
                         if(username.length() != 0) {
                             //Setting username
                             UserProfileChangeRequest profileChangeRequest = new UserProfileChangeRequest.Builder()
@@ -117,9 +128,16 @@ public class RegisterFragment extends Fragment
                                     if(!task.isSuccessful())
                                         Toast.makeText(getActivity(), "Unable to set username", Toast.LENGTH_SHORT).show();
 
-                                    Intent intent = new Intent(getActivity(), HomeActivity.class);
-                                    intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
-                                    startActivity(intent);
+                                    if(authEntity)
+                                    {
+                                        //Student dashboard
+                                    }
+                                    else
+                                    {
+                                        Intent intent = new Intent(getActivity(), AdminDashActivity.class);
+                                        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+                                        startActivity(intent);
+                                    }
                                 }
                             });
                         }
